@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Sequelize } = require('sequelize');
+const { Sequelize} = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 
@@ -7,7 +7,7 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST,
 } = process.env;
 
-const sequelize = new Sequelize(`mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/becleverapi`, {
+const sequelize = new Sequelize(`mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/u171004388_test`, {
   logging: false, 
   native: true, 
 });
@@ -61,5 +61,5 @@ Register.belongsTo(Employee,{foreignKey:'id_employee'});
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Businesslocation, Employee } = require('./db.js');
-  conn: sequelize,     // para importart la conexión { conn } = require('./db.js');
+  conn: sequelize     // para importart la conexión { conn } = require('./db.js');
 };
