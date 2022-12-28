@@ -1,0 +1,24 @@
+const { DataTypes } = require('sequelize');
+
+// Exportamos una funcion que define el modelo
+// Luego le injectamos la conexion a sequelize.
+module.exports = (sequelize) => {
+  // defino el modelo
+  sequelize.define('register', {
+    id_register: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    id_employee:{
+        type:DataTypes.INTEGER
+    },
+    date:{
+        type:DataTypes.DATE
+    },   
+    id_register_type:{
+        type:DataTypes.INTEGER
+    }, 
+   
+  },{timestamps: false});
+};

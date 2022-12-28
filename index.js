@@ -1,20 +1,24 @@
 var express = require('express');
 var app=express();
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+
+const {conn} = require('./db.js');
+const {Genero, Businesslocation,Employee} =  require('./db.js');
 
 
-app.use(express.static('public'))
-
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
- 
-app.get("/", function (req, res) {
-    res.send({ok:true});
+app.get("/",async function (req, res) {
+    let data = await Employee.findAll({
+        include:{model:Businesslocation}
+    });
+    res.send({data});
 });
 
-var server = app.listen(3001,function(){
-    console.log('inicio');
-})
 
+    conn.sync({ force: false }).then(() => {
+        app.listen(3001, () => {
+          console.log('%s conectado at 3001'); // eslint-disable-line no-console
+        });
+      });
+   
 
 
