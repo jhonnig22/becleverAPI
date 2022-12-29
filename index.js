@@ -45,7 +45,7 @@ app.post("/egreso",async function (req, res) {
         date: dataPost.date,
         id_register_type:dataPost.id_register_type
     });
-    console.log(register);
+    // console.log(register);
         res.send({'success':true});
      
    } catch (error) {
@@ -72,11 +72,13 @@ app.post("/search",async function (req, res) {
 
       let result =  await Register.findAll({
         include:{model:Employee,
+                include:{model:Businesslocation},
                 where:{
                     [Op.or]:[{name:{[Op.like]:`${filter}%`}},
                              {surname:{[Op.like]:`${filter}%`}}
-                            ]
-                }
+                            ],
+                    id_businessLocation:location        
+                }                
                },
         where:{
            date:{[Op.between]: [desde, hasta]}
@@ -93,11 +95,33 @@ app.post("/search",async function (req, res) {
     
    
 });
-
+app.get("/average",async function (req, res) {
+    let dataGet = req.query;
+   try {
+        let desde =  dataGet.dateFrom;
+        let hasta = dataGet.dateTo;
+        console.log(desde,hasta);
+    // console.log(register);
+       
+        let result = await conn.query(`select COUNT(*) as value,generos.name as genero, businesslocations.name from registers 
+        LEFT JOIN employees on employees.id_employee = registers.id_employee
+        LEFT JOIN businesslocations ON businesslocations.id_businessLocation = employees.id_businessLocation
+        LEFT JOIN generos ON generos.id_genero = employees.id_genero
+        WHERE registers.date BETWEEN '${desde}' AND '${hasta}'
+        GROUP by businesslocations.name, generos.name`);
+        
+        res.send(result);
+    //     // console.log(result[0]);
+    //   })
+   } catch (error) {
+    console.log(error);
+   }
+   
+});
 
     conn.sync({ force: false }).then(() => {
         app.listen(3001, () => {
-          console.log('%s conectado at 3001'); // eslint-disable-line no-console
+          console.log('%s conectado at 3001'); 
         });
       });
    
