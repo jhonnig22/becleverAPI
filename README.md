@@ -1,6 +1,6 @@
 # becleverAPI
 
-el proyecto lo corro en visual studio code 
+el proyecto lo corro en visual studio code <BR>
 1-clonar proyecto
 2-tener instalado node.js
 3-npm install, instalara todas dependencias usadas para el proyecto
