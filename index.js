@@ -110,6 +110,9 @@ app.get("/average",async function (req, res) {
         WHERE registers.date BETWEEN '${desde}' AND '${hasta}'
         GROUP by businesslocations.name, generos.name`);
         
+        //total = masculinos+femeninos;
+        // % = masculino * 100 / total 
+        
         res.send(result);
     //     // console.log(result[0]);
     //   })
